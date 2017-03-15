@@ -6,13 +6,13 @@ Java Implementation of Kruskal's Algorithm using **disjoing sets**
 - **Algorithm still works on edges with identical weight**  
 Edges are sorted by weight first. Depending on the order they are entered into the **edge list** in the **constructor**, you may get different Minimum Spanning Trees (but all still optimal solutions)
 
-##PseudoCode
+## PseudoCode
 ![kruskal-pseudocode](https://cloud.githubusercontent.com/assets/15304528/23335535/450deca2-fb85-11e6-9fd6-ce146ddb3471.png)
 
-##Detailed Implementation
+## Detailed Implementation
 ![kruskal-detailed-implementation](https://cloud.githubusercontent.com/assets/15304528/23335531/3ef5b4da-fb85-11e6-9d9d-01318c793a3c.png)
 
-##Code Notes
+## Code Notes
 Current code runs on this sample graph
 ![graph](https://cloud.githubusercontent.com/assets/15304528/23335398/0971bd4c-fb83-11e6-9390-3c3d10d524c3.png)
 It produces this Minimum Spanning Tree
@@ -32,6 +32,6 @@ Example graph has 8 nodes numbered 1-8 (array ignores the 0th index)
 Hence `&& mstEdges.size()<(nodeCount-1)` in my loop
 - The `Edge` class simply packages an edge's weight & 2 vertices together as 1 object
 
-####Sources
+#### Sources
 - [Disjoint Sets by Mark Allen Weiss](http://users.cis.fiu.edu/~weiss/dsaajava3/code/DisjSets.java) Author of *Data Structures and Algorithm Analysis in Java (3rd Edition), 2011*  
 He also has other helpful [Java Data Structures implementations](http://users.cis.fiu.edu/~weiss/dsaajava3/code/)
