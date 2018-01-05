@@ -20,15 +20,11 @@ It produces this Minimum Spanning Tree
 
 - Requires **distinct nodes named with consecutive integers**. If they really **do** have the same "name", convert them to integer ID's to use this algorithm  
 Example graph has 8 nodes numbered 1-8 (array ignores the 0th index)
-- **You must hardcode the graph structure in constructor** as a **list of edges**
-- `graphEdges` is **indexed from 1** to make it more human-readable. In the constructor:  
-`graphEdges=new ArrayList<Edge>();`  //creates empty ArrayList  
-`graphEdges.add(new Edge(0, 0, 0));`  //adds dummy edge before any actual edges  
-**The 0th index is ignored because the loop starts @ 1**
-- `DisjointSet nodeSet = new DisjointSet(nodeCount+1);` also skips the 0th index by creating a Disjoint Set **1 larger than the number of nodes**
+- **Graph is created as an Edge List**
 - **Make sure `nodeCount` is accurate**. There's no error checking between `nodeCount` & the actual edge list
+- `DisjointSet nodeSet = new DisjointSet(nodeCount+1);` skips the 0th index by creating a Disjoint Set **1 larger than the number of vertices**
 - `outputMessage` is a string that records  the steps the algorithm takes. It's printed to the screen & to a file once complete
-- My implementation has **early termination**. If a graph has **N nodes** the MST has **(N-1) edges**  
+- My implementation has **early termination** (A Spanning Tree of a graph has **N-1** edges so the algorithm stops whenn it has added **N-1** Edges)
 Hence `&& mstEdges.size()<(nodeCount-1)` in my loop
 - The `Edge` class simply packages an edge's weight & 2 vertices together as 1 object
 
