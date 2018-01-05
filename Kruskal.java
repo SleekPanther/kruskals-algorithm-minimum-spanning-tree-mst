@@ -114,33 +114,33 @@ class Edge implements Comparable<Edge>{
 // CONSTRUCTION: with int representing initial number of sets
 //
 // ******************PUBLIC OPERATIONS*********************
-// void union( root1, root2 ) --> Merge two sets
-// int find( x )              --> Return set containing x
+// void union(root1, root2) --> Merge two sets
+// int find(x)              --> Return set containing x
 // ******************ERRORS********************************
 // No error checking is performed
 // http://users.cis.fiu.edu/~weiss/dsaajava3/code/DisjSets.java
 
 /**
- * Disjoint set class, using union by rank and path compression.
- * Elements in the set are numbered starting at 0.
+ * Disjoint set class, using union by rank and path compression
+ * Elements in the set are numbered starting at 0
  * @author Mark Allen Weiss
  */
 class DisjointSet{
-	private int [] s;		//the set field
-
+	private int[] set;		//the disjoint set as an array
 
 	public int[] getSet(){		//mostly debugging method to print array
-		return s;
+		return set;
 	}
 
 	/**
 	 * Construct the disjoint sets object.
 	 * @param numElements the initial number of disjoint sets.
 	 */
-	public DisjointSet( int numElements ) {		//constructor creates singleton sets
-		s = new int [ numElements ];
-		for( int i = 0; i < s.length; i++ )		//initialize to -1 so the trees have nothing in them
-			s[ i ] = -1;
+	public DisjointSet(int numElements) {		//constructor creates singleton sets
+		set = new int [numElements];
+		for(int i = 0; i < set.length; i++){		//initialize to -1 so the trees have nothing in them
+			set[i] = -1;
+		}
 	}
 
 	/**
@@ -150,13 +150,15 @@ class DisjointSet{
 	 * @param root1 the root of set 1.
 	 * @param root2 the root of set 2.
 	 */
-	public void union( int root1, int root2 ) {
-		if( s[ root2 ] < s[ root1 ] )  // root2 is deeper
-			s[ root1 ] = root2;        // Make root2 new root
+	public void union(int root1, int root2) {
+		if(set[root2] < set[root1]){		// root2 is deeper
+			set[root1] = root2;		// Make root2 new root
+		}
 		else {
-			if( s[ root1 ] == s[ root2 ] )
-				s[ root1 ]--;          // Update height if same
-			s[ root2 ] = root1;        // Make root1 new root
+			if(set[root1] == set[root2]){
+				set[root1]--;			// Update height if same
+			}
+			set[root2] = root1;		// Make root1 new root
 		}
 	}
 
@@ -166,10 +168,12 @@ class DisjointSet{
 	 * @param x the element being searched for.
 	 * @return the set containing x.
 	 */
-	public int find( int x ) {
-		if( s[ x ] < 0 )	//if tree has no elements, then it is its own root
+	public int find(int x) {
+		if(set[x] < 0){		//if tree has no elements, then it is its own root
 			return x;
-		else
-			return s[ x ] = find( s[ x ] );
+		}
+		else{	//Recursively find the parent of 
+			return set[x] = find(set[x]);
+		}
 	}
 }
