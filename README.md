@@ -1,7 +1,7 @@
 # Kruskal's Algorithm Minimum Spanning Tree (Graph MST)
 
 Java Implementation of Kruskal's Algorithm using **disjoing sets**  
-**Kruskal's algorithm:** Start with T = ∅. Consider edges in ascending order of weight. Insert edge e into T unless doing so would create a cycle
+**Kruskal's algorithm:** Start with **T** = ∅. Consider edges in ascending order of weight. Insert edge `e` into **T** unless doing so would create a cycle.
 - Works on **UN-directed** graphs
 - **Algorithm still works on edges with identical weight**  
 Edges are sorted by weight first. Depending on the order they are entered into the **edge list** in the **constructor**, you may get different Minimum Spanning Trees (but all still optimal solutions)
