@@ -6,12 +6,15 @@ public class Kruskal {
 	private ArrayList<Edge> graphEdges;		//edge list, not adjacency list
 
 	public static void main(String[] args) {
-		Kruskal graph = new Kruskal();
+		int nodeCount = 8;
+		Kruskal graph = new Kruskal(nodeCount);	//CAREFUL: nodeCount must be correct. No error checking between nodeCount & graphEdges to see how many nodes actually exist
 		graph.kruskalMST();				//run Kruskal's algorithm to find a MST
 	}
 
-	public Kruskal(){
-		graphEdges=new ArrayList<Edge>();
+	public Kruskal(int nodeCount){
+		this.nodeCount=nodeCount;
+
+		graphEdges = new ArrayList<Edge>();
 		graphEdges.add(new Edge(0, 0, 0));		//dummy edge to ignore 0th position in ArrayList
 		graphEdges.add(new Edge(3, 5, 2));
 		graphEdges.add(new Edge(6, 7, 5));
@@ -28,8 +31,6 @@ public class Kruskal {
 		graphEdges.add(new Edge(2, 3, 24));
 		graphEdges.add(new Edge(7, 8, 44));		//I create these in the constructor in "almost sorted order". (Just the final 2 edges should be switched). This is more for ease of input, but I call Collections.sort() on my edge list before the algorithm begins so it doesn't matter
 		graphEdges.add(new Edge(6, 5, 30));
-
-		nodeCount=8;		//CAREFUL: nodeCount must be correct. No error checking between nodeCount & graphEdges to see how many nodes actually exist
 	}
 
 	public void kruskalMST(){
