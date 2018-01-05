@@ -2,19 +2,8 @@ import java.util.*;
 import java.io.*;
 
 public class Kruskal {
-	private int nodeCount;	//how many nodes. NODE COUNT MUST BE ENTERED MANUALLY. No error handling between nodeCount and graphEdges
-	private ArrayList<Edge> graphEdges;		//edge list, not adjacency list
-
 	public static void main(String[] args) {
-		int nodeCount = 8;
-		Kruskal graph = new Kruskal(nodeCount);	//CAREFUL: nodeCount must be correct. No error checking between nodeCount & graphEdges to see how many nodes actually exist
-		graph.kruskalMST();				//run Kruskal's algorithm to find a MST
-	}
-
-	public Kruskal(int nodeCount){
-		this.nodeCount=nodeCount;
-
-		graphEdges = new ArrayList<Edge>();
+		ArrayList<Edge> graphEdges = new ArrayList<Edge>();;		//edge list, not adjacency list
 		graphEdges.add(new Edge(0, 0, 0));		//dummy edge to ignore 0th position in ArrayList
 		graphEdges.add(new Edge(3, 5, 2));
 		graphEdges.add(new Edge(6, 7, 5));
@@ -29,39 +18,45 @@ public class Kruskal {
 		graphEdges.add(new Edge(3, 8, 19));
 		graphEdges.add(new Edge(7, 5, 20));
 		graphEdges.add(new Edge(2, 3, 24));
-		graphEdges.add(new Edge(7, 8, 44));		//I create these in the constructor in "almost sorted order". (Just the final 2 edges should be switched). This is more for ease of input, but I call Collections.sort() on my edge list before the algorithm begins so it doesn't matter
+		graphEdges.add(new Edge(7, 8, 44));		//Edges created in almost sorted order, only the last 2 are switched but this is unnecessary as edges are sorted in the algorithm
 		graphEdges.add(new Edge(6, 5, 30));
+
+		int nodeCount = 8;		//how many nodes. NODE COUNT MUST BE ENTERED MANUALLY. No error handling between nodeCount and graphEdges
+
+		Kruskal graph = new Kruskal();	//CAREFUL: nodeCount must be correct. No error checking between nodeCount & graphEdges to see how many nodes actually exist
+		graph.kruskalMST(graphEdges, nodeCount);
 	}
 
-	public void kruskalMST(){
-		String outputMessage="";	//hold output for the user to know algorithm's progress
+	public void kruskalMST(ArrayList<Edge> graphEdges, int nodeCount){
+		String outputMessage="";
 
 		Collections.sort(graphEdges);		//sort edges with smallest weight 1st
 		ArrayList<Edge> mstEdges = new ArrayList<Edge>();	//list of edges included in the Minimum spanning tree (initially empty)
 
-		DisjointSet nodeSet = new DisjointSet(nodeCount+1);		//Initialize singleton sets for each node in graph. (nodeCount +1) to make the array 1-indexed & ignore the 0th position
+		DisjointSet nodeSet = new DisjointSet(nodeCount+1);		//Initialize singleton sets for each node in graph. (nodeCount +1) to account for arrays indexing from 0
 
-		for(int i=1; i<graphEdges.size() && mstEdges.size()<(nodeCount-1); i++){		//loop over all edges. Start @ 1 (ignore 0th as placeholder). Also early termination when number of edges=(number of nodes -1)
+		for(int i=1; i<graphEdges.size() && mstEdges.size()<(nodeCount-1); i++){		//loop over all edges. Start @ 1 (ignore 0th as placeholder). Also early termination when number of edges=(number of nodes-1)
 			Edge currentEdge = graphEdges.get(i);
-			int root1 = nodeSet.find(currentEdge.getVertex1());
+			int root1 = nodeSet.find(currentEdge.getVertex1());		//Find root of 1 vertex of the edge
 			int root2 = nodeSet.find(currentEdge.getVertex2());
 			outputMessage+="find("+currentEdge.getVertex1()+") returns "+root1+", find("+currentEdge.getVertex2()+") returns "+root2;		//just print, keep on same line for union message
 			String unionMessage=",\tNo union performed\n";		//assume no union is to be performed, changed later if a union DOES happen
-			if(root1 != root2){			//if roots are in different sets
+			if(root1 != root2){			//if roots are in different sets the DO NOT create a cycle
 				mstEdges.add(currentEdge);		//add the edge to the graph
-				nodeSet.union(root1, root2);	//merge the sets
+				nodeSet.union(root1, root2);	//union the sets
 				unionMessage=",\tUnion("+root1+", "+root2+") done\n";		//change what's printed if a union IS performed
 			}
 			outputMessage+=unionMessage;
 		}
 
 		outputMessage+="\nFinal Minimum Spanning Tree ("+mstEdges.size()+" edges)\n";
-		int mstTotalEdgeWeight=0;		//keeps track of total weight of all edges in the MST
+		int mstTotalEdgeWeight=0;
 		for(Edge edge: mstEdges){
 			outputMessage+=edge +"\n";		//print each edge
 			mstTotalEdgeWeight += edge.getWeight();
 		}
-		outputMessage+="\nTotal weight of all edges in MST: "+mstTotalEdgeWeight;
+		outputMessage+="\nTotal weight of all edges in MST = "+mstTotalEdgeWeight;
+
 		System.out.println(outputMessage);
 
 		try (PrintWriter outputFile = new PrintWriter( new File("06outputMST.txt") ); ){
@@ -104,7 +99,7 @@ class Edge implements Comparable<Edge>{
 
 	@Override
 	public String toString() {
-		return "("+getVertex1()+", "+getVertex2()+") weight: "+getWeight();
+		return "Edge ("+getVertex1()+", "+getVertex2()+") weight="+getWeight();
 	}
 }
 
@@ -176,4 +171,5 @@ class DisjointSet{
 			return set[x] = find(set[x]);
 		}
 	}
+	
 }
