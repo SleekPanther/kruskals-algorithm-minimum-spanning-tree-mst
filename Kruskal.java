@@ -3,8 +3,7 @@ import java.io.*;
 
 public class Kruskal {
 	public static void main(String[] args) {
-		ArrayList<Edge> graphEdges = new ArrayList<Edge>();;		//edge list, not adjacency list
-		graphEdges.add(new Edge(0, 0, 0));		//dummy edge to ignore 0th position in ArrayList
+		ArrayList<Edge> graphEdges = new ArrayList<Edge>();		//edge list, not adjacency list
 		graphEdges.add(new Edge(3, 5, 2));
 		graphEdges.add(new Edge(6, 7, 5));
 		graphEdges.add(new Edge(3, 4, 6));
@@ -35,7 +34,7 @@ public class Kruskal {
 
 		DisjointSet nodeSet = new DisjointSet(nodeCount+1);		//Initialize singleton sets for each node in graph. (nodeCount +1) to account for arrays indexing from 0
 
-		for(int i=1; i<graphEdges.size() && mstEdges.size()<(nodeCount-1); i++){		//loop over all edges. Start @ 1 (ignore 0th as placeholder). Also early termination when number of edges=(number of nodes-1)
+		for(int i=0; i<graphEdges.size() && mstEdges.size()<(nodeCount-1); i++){		//loop over all edges. Start @ 1 (ignore 0th as placeholder). Also early termination when number of edges=(number of nodes-1)
 			Edge currentEdge = graphEdges.get(i);
 			int root1 = nodeSet.find(currentEdge.getVertex1());		//Find root of 1 vertex of the edge
 			int root2 = nodeSet.find(currentEdge.getVertex2());
