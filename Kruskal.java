@@ -163,12 +163,14 @@ class DisjointSet{
 	 * @return the set containing x.
 	 */
 	public int find(int x) {
-		if(set[x] < 0){		//if tree has no elements, then it is its own root
+		if(set[x] < 0){		//If tree is a root, return its index
 			return x;
 		}
-		else{	//Recursively find the parent of 
-			return set[x] = find(set[x]);
+		int next = x;		
+		while(set[next] > 0){		//Loop until we find a root
+			next=set[next];
 		}
+		return next;
 	}
 	
 }
